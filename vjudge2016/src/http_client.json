@@ -1,0 +1,14 @@
+{
+    socket_timeout : 30000,
+    connection_timeout : 30000,
+    max_conn_total : 200,
+    max_conn_per_route : 40,
+    user_agent : "Virtual Judge robot",
+    "proxies" :
+    [
+        ["direct"],
+        ["http", "1.2.3.4", 25],
+        ["http", "5.6.7.8", 25, "user", "pwd"],
+        ["socks", "2.3.4.5", 26]
+    ]
+}
