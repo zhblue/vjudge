@@ -12,7 +12,7 @@ https://github.com/hnshhslsh/virtual-judge
 * 安装启动tomcat7+
 * 将下载到的vjudge.war文件放入webapps目录
 * 等待tomcat自动解压缩得到vjudge目录
-* 启动mysql,建库，用vjudge/WEB-INF/classes/vhoj_20141109.sql 建库。
+* 启动mysql,建库，用vjudge/WEB-INF/classes/vhoj_20141109.sql 建表。
 * 编辑vjudge/WEB-INF/classes/config.properties设置数据库账号
 * 编辑vjudge/WEB-INF/classes/remote_accounts.json设置宿主OJ账号
 * 编辑vjudge/WEB-INF/classes/http_client.json设置代理服务器（可选）
