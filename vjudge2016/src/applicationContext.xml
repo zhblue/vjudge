@@ -46,6 +46,9 @@
                 <prop key="hibernate.dialect">
                     org.hibernate.dialect.MySQLDialect
                 </prop>
+				<prop key="connection.autoReconnect">true</prop>
+				<prop key="connection.autoReconnectForPools">true</prop>
+				<prop key="connection.is-connection-validation-required">true</prop>
 
                 <!--<prop key="hibernate.query.factory_class"> org.hibernate.hql.classic.ClassicQueryTranslatorFactory </prop> -->
                 <!--<prop key="hibernate.show_sql">true</prop>-->
