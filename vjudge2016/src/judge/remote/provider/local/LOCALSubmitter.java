@@ -29,8 +29,15 @@ public class LOCALSubmitter extends CanonicalSubmitter {
 
     @Override
     protected Integer getMaxRunId(SubmissionInfo info, DedicatedHttpClient client, boolean submitted) {
-        String html = client.get(LOCALInfo.PATH+"/status.php?user_id=" + info.remoteAccountId + "&problem_id=" + info.remoteProblemId).getBody();
-        Matcher matcher = Pattern.compile("class='evenrow'><td>	(\\d+)").matcher(html);
+    	try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        String html = client.get(LOCALInfo.path+"/status.php?user_id=" + info.remoteAccountId + "&problem_id=" + info.remoteProblemId+"&rand="+Math.random()).getBody();
+        Matcher matcher = Pattern.compile("<tr class='evenrow'><td>(\\d+)</td>").matcher(html);
+       // System.out.println(html);
         return matcher.find() ? Integer.parseInt(matcher.group(1)) : -1;
     }
 
@@ -41,7 +48,7 @@ public class LOCALSubmitter extends CanonicalSubmitter {
             "id", info.remoteProblemId, //
             "source", info.sourceCode //
         );
-        client.post(LOCALInfo.PATH+"/submit.php", entity, HttpStatusValidator.SC_MOVED_TEMPORARILY);
+        client.post(LOCALInfo.path+"/submit.php", entity, HttpStatusValidator.SC_MOVED_TEMPORARILY);
         return null;
     }
 

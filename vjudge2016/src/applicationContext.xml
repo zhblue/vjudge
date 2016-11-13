@@ -126,6 +126,7 @@
         </property>
     </bean>
 
+ 	
 
     <!-- 配置Service -->
     <bean id="baseService" class="judge.service.BaseService">
@@ -184,5 +185,6 @@
 
     <bean id="remoteAccountTaskExecutor" factory-bean="remoteAccountTaskExecutorFactory" factory-method="create"
         init-method="init" />
-
+   
+ 
 </beans>

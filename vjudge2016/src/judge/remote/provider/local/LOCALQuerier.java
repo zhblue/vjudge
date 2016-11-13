@@ -28,7 +28,7 @@ public class LOCALQuerier extends AuthenticatedQuerier {
     @Override
     protected SubmissionRemoteStatus query(SubmissionInfo info, RemoteAccount remoteAccount, DedicatedHttpClient client) {
     	 String html = client.get(
-    			 LOCALInfo.PATH+"/status-ajax.php?solution_id=" + info.remoteRunId,
+    			 LOCALInfo.path+"/status-ajax.php?solution_id=" + info.remoteRunId,
                  new HttpBodyValidator("<title>Error</title>", true)).getBody();
     	 System.out.println(html);
          String[] s=html.split(",");
@@ -44,7 +44,7 @@ public class LOCALQuerier extends AuthenticatedQuerier {
              
              Validate.isTrue(result[Integer.parseInt(s[0])].contains("Compile Error"));
              status.compilationErrorInfo = client.get(
-            		 LOCALInfo.PATH+"/ceinfo.php?sid=" + info.remoteRunId,
+            		 LOCALInfo.path+"/ceinfo.php?sid=" + info.remoteRunId,
                      new HttpBodyValidator("<title>Error</title>", true)).getBody().substring(3277);
          }
          }catch(Exception e){
