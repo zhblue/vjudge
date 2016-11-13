@@ -27,7 +27,7 @@ public class FileDownloader {
                 //设置超时间为3秒  
         conn.setConnectTimeout(3*1000);  
         //防止屏蔽程序抓取而返回403错误  
-        conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");  
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36");  
   
         //得到输入流  
         InputStream inputStream = conn.getInputStream();    

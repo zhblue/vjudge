@@ -18,7 +18,7 @@
 
     HUST :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -30,7 +30,7 @@
 
     POJ :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -42,7 +42,7 @@
 
     ZOJ :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -54,7 +54,7 @@
 
     SPOJ :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -66,7 +66,7 @@
 
     UVALive :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -78,7 +78,7 @@
 
     UVA :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -90,7 +90,7 @@
 
     SGU :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -102,7 +102,7 @@
 
     HDU :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -114,7 +114,7 @@
 
     HYSBZ :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -126,7 +126,7 @@
 
     CodeForces :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -138,7 +138,7 @@
 
     Aizu :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -150,7 +150,7 @@
 
     NBUT :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -162,7 +162,7 @@
 
     FZU :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -174,7 +174,7 @@
 
     CSU :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -186,7 +186,7 @@
 
     SCU :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -198,7 +198,7 @@
 
     UESTC :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
@@ -210,7 +210,7 @@
 
     URAL :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {  id : "12345AB"  },
@@ -220,11 +220,23 @@
 
     ACdream :
     {
-        contextNumber : 5,
+        contextNumber : 1,
         accounts :
         [
             {
                 id : "id1",
+                password : "123456"
+            }
+        ]
+    }
+,
+LOCAL :
+    {
+        contextNumber : 1,
+        accounts :
+        [
+            {
+                id : "guest",
                 password : "123456"
             }
         ]
