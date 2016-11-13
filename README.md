@@ -19,3 +19,8 @@ https://github.com/hnshhslsh/virtual-judge
 * 重启tomcat
 * 浏览器访问http://服务器地址:8080/vjudge/
 * 如需去掉端口、子目录，可用nginx做反向代理。
+
+只需少量调整就可以跟最新版hustoj配合，自己的vjudge抓自己oj的题。
+  judge.remote.provider.local.*
+   
+
