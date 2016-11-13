@@ -21,6 +21,8 @@ https://github.com/hnshhslsh/virtual-judge
 * 如需去掉端口、子目录，可用nginx做反向代理。
 
 只需少量调整就可以跟最新版hustoj配合，自己的vjudge抓自己oj的题。
-  judge.remote.provider.local.*
-   
+
+  相关类judge.remote.provider.local.*
+  配置域名和路径
+  https://github.com/zhblue/vjudge/blob/master/vjudge2016/src/config.properties#L34
 
