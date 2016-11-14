@@ -35,6 +35,13 @@
         <property name="maxActive" value="10" />
         <property name="maxIdle" value="5" />
         <property name="minIdle" value="2" />
+        <property name= "testOnBorrow" value="true" />
+        <property name= "testOnReturn" value="true" />
+        <property name= "validationQuery" value="select 1" />
+        <property name= "timeBetweenEvictionRunsMillis" value="30000" />
+        <property name= "numTestsPerEvictionRun" value="30" />
+        <property name="minEvictableIdleTimeMillis" value="1800000" />
+        
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
