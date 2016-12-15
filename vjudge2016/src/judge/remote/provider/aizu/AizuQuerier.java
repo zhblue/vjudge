@@ -29,19 +29,19 @@ public class AizuQuerier extends SyncQuerier {
         
         String html = client.get("/onlinejudge/status.jsp").getBody();
         String regex =
-                "<td.*?#" + info.remoteRunId + "[\\s\\S]*?" +
-                "<td[\\s\\S]*?" +
-                "<td.*?" + info.remoteAccountId + "[\\s\\S]*?" +
-                "<td[\\s\\S]*?" +
-                "<td[\\s\\S]*?" +
-                "<td.*?icon\\w+\">:([\\s\\S]*?)</span>[\\s\\S]*?" +
-                "<td.*?>.*?</td>[\\s\\S]*?" +
-                "<td.*?>.*?</td>[\\s\\S]*?" +
-                "<td.*?>.*?</td>[\\s\\S]*?" +
-                "<td.*?>(.*?)</td>[\\s\\S]*?" +
-                "<td.*?>(.*?)</td>[\\s\\S]*?" +
-                "<td.*?>.*?</td>[\\s\\S]*?" +
-                "<td.*?>.*?</td>[\\s\\S]*?";
+                "<tr.*?id=\"run_" + info.remoteRunId + "[\\s\\S]*?" +
+                "<td[\\s\\S]*?" +   //Run#
+                "<td.*?" + info.remoteAccountId + "[\\s\\S]*?" +    //Author
+                "<td[\\s\\S]*?" +   //Problem
+//                "<td[\\s\\S]*?" +
+                "<td.*?icon\\w+\">:([\\s\\S]*?)</span>[\\s\\S]*?" + //Status
+                "<td.*?>.*?</td>[\\s\\S]*?" +   //%
+                "<td.*?>.*?</td>[\\s\\S]*?" +   //lang
+                "<td.*?>.*?</td>[\\s\\S]*?" +   //<!-- -->
+                "<td.*?>(.*?)</td>[\\s\\S]*?" + //Time
+                "<td.*?>(.*?)</td>[\\s\\S]*?" + //Memory
+                "<td.*?>.*?</td>[\\s\\S]*?" +   //Code
+                "<td.*?>.*?</td>[\\s\\S]*?";    //Submission Date
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(html);
         Validate.isTrue(matcher.find());
