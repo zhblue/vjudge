@@ -35,6 +35,7 @@ public class AizuLanguageFinder implements LanguageFinder {
         languageList.put("C++", "C++");
         languageList.put("JAVA", "JAVA");
         languageList.put("C++11", "C++11");
+        languageList.put("C++14", "C++14");
         languageList.put("C#", "C#");
         languageList.put("D", "D");
         languageList.put("Ruby", "Ruby");
@@ -42,6 +43,9 @@ public class AizuLanguageFinder implements LanguageFinder {
         languageList.put("Python3", "Python3");
         languageList.put("PHP", "PHP");
         languageList.put("JavaScript", "JavaScript");
+        languageList.put("Scala", "Scala");
+        languageList.put("Haskell", "Haskell");
+        languageList.put("OCaml", "OCaml");
         return languageList;
     }
 
