@@ -31,9 +31,10 @@ public class AizuSubmitter extends CanonicalSubmitter {
     @Override
     protected Integer getMaxRunId(SubmissionInfo info, DedicatedHttpClient client, boolean submitted) {
         String html = client.get("/onlinejudge/status.jsp").getBody();
-        Matcher matcher = Pattern.compile("runID=(\\d+)(?:[\\s\\S](?!/tr))*>" + info.remoteAccountId + "<(?:[\\s\\S](?!/tr))*description\\.jsp\\?id=" + info.remoteProblemId).matcher(html);
+        Matcher matcher = Pattern.compile("id=\"run_(\\d+)(?:[\\s\\S](?!\\/tr))*>" + info.remoteAccountId + "<(?:[\\s\\S](?!\\/tr))*description\\.jsp\\?id=" + info.remoteProblemId).matcher(html);
         return matcher.find() ? Integer.parseInt(matcher.group(1)) : -1;
     }
+
 
     @Override
     protected String submitCode(SubmissionInfo info, RemoteAccount remoteAccount, DedicatedHttpClient client) {
