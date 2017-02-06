@@ -1,14 +1,15 @@
 # vjudge
-Just a preservation snap of the latest opensource version of virtual-judge
+#Just a preservation snap of the latest opensource version of virtual-judge#
 
 
 
 基础代码来自
 https://github.com/hnshhslsh/virtual-judge
 
-做了一些小的调整和改动，让部署更容易。
-  #整理了所有的jar依赖，修订了路径和配置，增加了与最新版hustoj配合的本地判题功能。
-工程整理为eclipse工程，不需要破解myeclipse#
+做了一些小的调整和改动，让部署更容易
+
+整理了所有的jar依赖，修订了路径和配置，增加了与最新版hustoj配合的本地判题功能。
+工程整理为eclipse工程，不需要破解myeclipse
 
 基本操作：
 * 安装 jdk7+
