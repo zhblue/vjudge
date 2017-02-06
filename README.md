@@ -1,5 +1,6 @@
-# vjudge
-#Just a preservation snap of the latest opensource version of virtual-judge#
+#Virtual-Judge#
+
+  a fork of the hust-virtual-judge system early released source code
 
 
 
