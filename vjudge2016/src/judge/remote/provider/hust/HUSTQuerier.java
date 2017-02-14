@@ -1,6 +1,5 @@
 package judge.remote.provider.hust;
 
-import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,40 +40,11 @@ public class HUSTQuerier extends AuthenticatedQuerier {
         status.rawStatus = matcher.group(1).trim();
         status.executionTime = Integer.parseInt(matcher.group(2));
         status.executionMemory = Integer.parseInt(matcher.group(3));
-        status.statusType = HUSTSubstringNormalizer.DEFAULT.getStatusType(status.rawStatus);
+        status.statusType = SubstringNormalizer.DEFAULT.getStatusType(status.rawStatus);
         if (status.statusType == RemoteStatusType.CE) {
             status.compilationErrorInfo = (Tools.regFind(html, "(<pre class=\"col-sm-12 linenums\">[\\s\\S]*?</pre>)"));
         }
         return status;
     }
     
-}
-class HUSTSubstringNormalizer extends SubstringNormalizer{
-	public static final SubstringNormalizer DEFAULT = new HUSTSubstringNormalizer();
-	  @SuppressWarnings("unused")
-	private static LinkedHashMap<String, RemoteStatusType> baseStatusTypeMap = new LinkedHashMap<String, RemoteStatusType>(){{
-	        put("等待评测", RemoteStatusType.QUEUEING);
-	        put("等待重测", RemoteStatusType.QUEUEING);
-	       
-	        put("正在编译", RemoteStatusType.COMPILING);
-
-	        put("正确答案", RemoteStatusType.AC);
-	        put("表达错误", RemoteStatusType.PE);
-	        put("格式错误", RemoteStatusType.PE);
-
-	        put("编译错误", RemoteStatusType.CE);
-	        put("Compilation Error", RemoteStatusType.CE);
-
-	        put("错误答案", RemoteStatusType.WA);
-	        put("时间超限", RemoteStatusType.TLE);
-	        put("内存超限", RemoteStatusType.MLE);
-	        put("输出超限", RemoteStatusType.OLE);
-	        put("运行错误", RemoteStatusType.RE);
-	        put("段错误", RemoteStatusType.RE);
-	        put("Floating Point Error", RemoteStatusType.RE);
-	        put("Crash", RemoteStatusType.RE);
-
-	        put("正在运行", RemoteStatusType.JUDGING);
-	        put("ing", RemoteStatusType.JUDGING);
-	    }};
 }
