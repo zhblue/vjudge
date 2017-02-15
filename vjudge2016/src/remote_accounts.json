@@ -63,7 +63,17 @@
             }
         ]
     },
-
+  Tyvj :
+    {
+        contextNumber : 1,
+        accounts :
+        [
+            {
+                id : "guest",
+                password : "123456"
+            }
+        ]
+    },
     UVALive :
     {
         contextNumber : 1,
