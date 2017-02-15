@@ -18,6 +18,7 @@ public enum RemoteOj {
     SCU, //
     SGU, //
     SPOJ, //
+    Tyvj,
     UESTC, //
     UESTCOld, //
     URAL, //

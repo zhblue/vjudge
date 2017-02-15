@@ -34,17 +34,7 @@
 
 		<div id="title">
 			<div style="text-align: center">Virtual Judge</div>
-			<s:if test='#session.country == "CN"'>
-				<div style="float: right; width: 450px; padding-top: 10px;">
-					<wb:like appkey="cAvMG" type="text">test</wb:like>
-                    <wb:follow-button uid="5340553087" type="red_3" width="100%" height="24" ></wb:follow-button>
-				</div>
-			</s:if>
-			<s:else>
-				<div style="float: right; padding-top: 10px;">
-					<div class="fb-like"></div>
-				</div>
-			</s:else>
+		
 		</div>
 
     	<div style="width:900px;MARGIN-RIGHT:auto;MARGIN-LEFT:auto;clear:both;">
@@ -64,20 +54,7 @@
             %>
 
             </div>
-            <div style="line-height:20px;padding-top:5px;clear:both;">
-                <p>What's new:</p>
-                <ul>
-                    <li>2014-10-15  UI update. Please <a href="mailto:is.un@qq.com">contact me</a> if you find any bugs. Thanks very much!</li>
-                    <li style="color:red;">
-                        2014-09-20  Currently Virtual Judge has two access address:<br />
-                        <ul>
-                            <li><a href="http://acm.hust.edu.cn/vjudge" target="_blank">http://acm.hust.edu.cn/vjudge</a> : Since it was redirected to <a href="http://vjudge.net" target="_blank">vjudge.net</a> permanently incorrectly, you need clear your browser cache to use it. Recommended for Chinese visitors. </li>
-                            <li><a href="http://vjudge.net" target="_blank">http://vjudge.net</a> : Reverse proxy hosted overseas. Recommended for visitors who can't use the above entrance.</li>
-                        </ul>
-                    </li>
-                    <li>2010-10-07  Refer to <a href="https://github.com/trcnkq/virtual-judge/commits/master">this page</a> for recent change of Virtual Judge.</li>
-                </ul>
-            </div>
+        
         </div>
         <s:include value="/bottom.jsp" />
     </body>
