@@ -24,7 +24,7 @@ public class LOCALCrawler extends SyncCrawler {
     }
 
     private static final HttpHost HOSTS[] = new HttpHost[] {
-        new HttpHost(LOCALInfo.domain)
+        new HttpHost(LOCALInfo.getDomain())
     };
 
     @Override
@@ -71,7 +71,7 @@ public class LOCALCrawler extends SyncCrawler {
     }
 
     protected String getProblemUrl(HttpHost host, String problemId) {
-        return host.toURI() + LOCALInfo.path+"/problem.php?id=" + problemId;
+        return host.toURI() + LOCALInfo.getPath()+"/problem.php?id=" + problemId;
     }
     
     protected void preValidate(String problemId) {

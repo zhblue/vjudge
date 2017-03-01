@@ -35,7 +35,7 @@ public class LOCALSubmitter extends CanonicalSubmitter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        String html = client.get(LOCALInfo.path+"/status.php?user_id=" + info.remoteAccountId + "&problem_id=" + info.remoteProblemId+"&rand="+Math.random()).getBody();
+        String html = client.get(LOCALInfo.getPath()+"/status.php?user_id=" + info.remoteAccountId + "&problem_id=" + info.remoteProblemId+"&rand="+Math.random()).getBody();
         Matcher matcher = Pattern.compile("<tr class='evenrow'><td>(\\d+)</td>").matcher(html);
        // System.out.println(html);
         return matcher.find() ? Integer.parseInt(matcher.group(1)) : -1;
@@ -48,7 +48,7 @@ public class LOCALSubmitter extends CanonicalSubmitter {
             "id", info.remoteProblemId, //
             "source", info.sourceCode //
         );
-        client.post(LOCALInfo.path+"/submit.php", entity, HttpStatusValidator.SC_MOVED_TEMPORARILY);
+        client.post(LOCALInfo.getPath()+"/submit.php", entity, HttpStatusValidator.SC_MOVED_TEMPORARILY);
         return null;
     }
 

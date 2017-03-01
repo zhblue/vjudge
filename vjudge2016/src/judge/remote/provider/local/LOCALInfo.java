@@ -10,9 +10,9 @@ import judge.tool.ApplicationContainer;
 import org.apache.http.HttpHost;
 
 public class LOCALInfo {
-	public static String domain =java.util.ResourceBundle.getBundle("config").getString("hustoj.domain");
+	private static String domain =java.util.ResourceBundle.getBundle("config").getString("hustoj.domain");
     
-	public static String path=java.util.ResourceBundle.getBundle("config").getString("hustoj.path");
+	private static String path=java.util.ResourceBundle.getBundle("config").getString("hustoj.path");
 	
     
 
