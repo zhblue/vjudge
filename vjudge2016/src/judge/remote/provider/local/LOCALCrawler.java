@@ -24,7 +24,7 @@ public class LOCALCrawler extends SyncCrawler {
     }
 
     private static final HttpHost HOSTS[] = new HttpHost[] {
-        new HttpHost(LOCALInfo.getDomain())
+        new HttpHost(LOCALInfo.getDomain(),LOCALInfo.getPort())
     };
 
     @Override

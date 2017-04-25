@@ -11,7 +11,7 @@ import org.apache.http.HttpHost;
 
 public class LOCALInfo {
 	private static String domain =java.util.ResourceBundle.getBundle("config").getString("hustoj.domain");
-    
+	private static int port =Integer.parseInt(java.util.ResourceBundle.getBundle("config").getString("hustoj.port"));
 	private static String path=java.util.ResourceBundle.getBundle("config").getString("hustoj.path");
 	
     
@@ -41,7 +41,7 @@ public class LOCALInfo {
 	public static final RemoteOjInfo INFO = new RemoteOjInfo( //
             RemoteOj.LOCAL, //
             "LOCAL", //
-            new HttpHost(domain) //
+            new HttpHost(domain,port) //
     );
      
     
@@ -50,4 +50,10 @@ public class LOCALInfo {
         INFO._64IntIoFormat = "%lld & %llu";
         INFO.urlForIndexDisplay = "http://"+domain+path;
     }
+
+
+	public static int getPort() {
+		// TODO Auto-generated method stub
+		return port;
+	}
 }
