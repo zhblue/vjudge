@@ -91,12 +91,12 @@ public class ContestAction extends BaseAction {
     private List<Problem> pList;
     private List<Description> descList;
 
-    private boolean s, r, e;    //姣旇禌杩涜鐘舵��
+    private boolean s, r, e;    //比赛进行状态
     private DataTablesPage dataTablesPage;
 
-    private int contestType;    //0:鏅�氭瘮璧�    1:姣旇禌鍥炴斁
-    private File ranklistFile;    //ranklist鏁版嵁(csv鎴杄xcel鏍煎紡)
-    private List<String> selectedCellMeaning;    //閫夋嫨鐨刢ell鎰忎箟
+    private int contestType;    //0:普通比赛    1:比赛回放
+    private File ranklistFile;    //ranklist数据(csv或excel格式)
+    private List<String> selectedCellMeaning;    //选择的cell意义
 
     private Map cellMeaningOptions;
 
@@ -195,13 +195,13 @@ public class ContestAction extends BaseAction {
         dataTablesPage.setRecordsFiltered(baseService.count(hql.toString(), paraMap));
 
         if (sortCol != null){
-            if ("0".equals(sortCol)){            //鎸塱d
+            if ("0".equals(sortCol)){            //按id
                 hql.append(" order by contest.id " + sortDir);
-            } else if ("1".equals(sortCol)){    //鎸夋爣棰�
+            } else if ("1".equals(sortCol)){    //按标题
                 hql.append(" order by contest.title " + sortDir);
-            } else if ("2".equals(sortCol)){    //鎸夊紑濮嬫椂闂�
+            } else if ("2".equals(sortCol)){    //按开始时间
                 hql.append(" order by contest.beginTime " + sortDir + ", contest.id " + sortDir);
-            } else if ("5".equals(sortCol)){    //鎸夌鐞嗗憳鐢ㄦ埛鍚�
+            } else if ("5".equals(sortCol)){    //按管理员用户名
                 hql.append(" order by user.username " + sortDir);
             }
         }
@@ -238,9 +238,9 @@ public class ContestAction extends BaseAction {
         if (cid > 0 && judgeService.checkAuthorizeStatus(cid) != 0) {
             contest = (Contest) baseService.query(Contest.class, cid);
 
-            //姣旇禌缁撴潫鍚庢墠鑳絚lone
+            //比赛结束后才能clone
             if (new Date().compareTo(contest.getEndTime()) < 0) {
-                //浣嗘槸瓒呯骇绠＄悊鍛樺拰姣旇禌鍒涘缓鑰呬緥澶�
+                //但是超级管理员和比赛创建者例外
                 if (user.getSup() == 0 && user.getId() != contest.getManager().getId()) {
                     return ERROR;
                 }
@@ -290,7 +290,7 @@ public class ContestAction extends BaseAction {
 
     public void validateAddContest(){
         /**
-         * 鏍囬涓嶈兘涓虹┖锛屼笉鑳借秴杩�90瀛楃
+         * 标题不能为空，不能超过90字符
          */
         contest.setTitle(Tools.toHTMLChar(contest.getTitle()));
         if (contest.getTitle() == null || contest.getTitle().trim().isEmpty()) {
@@ -302,7 +302,7 @@ public class ContestAction extends BaseAction {
         }
 
         /**
-         * 姣旇禌鎻忚堪涓嶅緱澶氫簬65000瀛楃
+         * 比赛描述不得多于65000字符
          */
         contest.setDescription(Jsoup.clean(contest.getDescription(), Whitelist.relaxed()));
         if (contest.getDescription() != null && contest.getDescription().length() > 65000) {
@@ -311,7 +311,7 @@ public class ContestAction extends BaseAction {
         }
 
         /**
-         * 姣旇禌鍏憡涓嶅緱澶氫簬65000瀛楃
+         * 比赛公告不得多于65000字符
          */
         contest.setAnnouncement(Jsoup.clean(contest.getAnnouncement(), Whitelist.relaxed()));
         if (contest.getAnnouncement() != null && contest.getAnnouncement().length() > 65000) {
@@ -320,14 +320,14 @@ public class ContestAction extends BaseAction {
         }
 
         /**
-         * 鍏佽TimeMachine鐨勫�兼牎楠�
+         * 允许TimeMachine的值校验
          */
         if (contest.getEnableTimeMachine() != 0 && contest.getEnableTimeMachine() != 1) {
             contest.setEnableTimeMachine(1);
         }
 
         /**
-         * Replay鐨勬瘮璧涘繀椤讳负public,涓斿惎鐢═ime Machine
+         * Replay的比赛必须为public,且启用Time Machine
          */
         if (contestType != 0) {
             contest.setPassword("");
@@ -335,7 +335,7 @@ public class ContestAction extends BaseAction {
         }
 
         /**
-         * 鑷冲皯瑕佸姞涓�閬撻
+         * 至少要加一道题
          */
         if (pids == null || pids.isEmpty()) {
             this.addActionError("Please add one problem at least!");
@@ -343,7 +343,7 @@ public class ContestAction extends BaseAction {
         }
 
         /**
-         * 鑷冲26閬撻
+         * 至多26道题
          */
         if (pids.size() > 26){
             this.addActionError("You can't add more than 26 problem!");
@@ -351,7 +351,7 @@ public class ContestAction extends BaseAction {
         }
 
         /**
-         * 涓嶅厑璁搁鐩噸澶�
+         * 不允许题目重复
          */
         for (int i = 0; i < pids.size(); i++) {
             for (int j = i + 1; this.getActionErrors().isEmpty() && j < pids.size(); j++) {
@@ -363,7 +363,7 @@ public class ContestAction extends BaseAction {
         }
 
         /**
-         * 棰樼洰蹇呴』瀛樺湪浜庨搴撲腑
+         * 题目必须存在于题库中
          */
         pList = new ArrayList<Problem>();
         descList = new ArrayList<Description>();
@@ -401,7 +401,7 @@ public class ContestAction extends BaseAction {
 
         if (contestType == 0) {
             /**
-             * 銆愭櫘閫氭瘮璧涖��:寮�濮嬫椂闂翠笉鑳芥瘮褰撳墠鏃堕棿鏃�, 姣旇禌蹇呴』鍦�30澶╁唴寮�濮�
+             * 【普通比赛】:开始时间不能比当前时间早, 比赛必须在30天内开始
              */
             if (start < 1) {
                 this.addActionError("Begin time should be later than the current time!");
@@ -412,7 +412,7 @@ public class ContestAction extends BaseAction {
             }
         } else {
             /**
-             * 銆愭瘮璧涘洖鏀俱��:姣旇禌蹇呴』宸茬粡缁撴潫
+             * 【比赛回放】:比赛必须已经结束
              */
             if (start + dur > 0) {
                 this.addActionError("The contest should have ended!");
@@ -421,7 +421,7 @@ public class ContestAction extends BaseAction {
         }
 
         /**
-         * 缁撴潫鏃堕棿蹇呴』姣斿紑濮嬫椂闂存櫄,鎸佺画鏃堕棿蹇呴』鐭簬60澶�
+         * 结束时间必须比开始时间晚,持续时间必须短于60天
          */
         if (dur < 1) {
             this.addActionError("End time should be later than begin time!");
@@ -511,7 +511,7 @@ public class ContestAction extends BaseAction {
             baseService.execute("delete from Cproblem cproblem where cproblem.contest.id = " + contest.getId());
             baseService.addOrModify(dataList);
 
-            //鍒犻櫎鍘熸湁鐨剅eplayStatus鏂囦欢
+            //删除原有的replayStatus文件
             String relativePath = (String) ApplicationContainer.serveletContext.getAttribute("StandingDataPath");
             String path = ApplicationContainer.serveletContext.getRealPath(relativePath);
             File data = new File(path, contest.getId() + ".json");
@@ -655,7 +655,7 @@ public class ContestAction extends BaseAction {
     }
 
     /**
-     * 鎸囧畾姣旇禌鐢ㄩ鐨勬弿杩�
+     * 指定比赛用题的描述
      * @return
      */
     public String appointDescription() {
@@ -811,15 +811,15 @@ public class ContestAction extends BaseAction {
         if (authorizeStatus == 0) {
             return ERROR;
         }
-        Map parMap=new HashMap();
+
         String start = getParameter("start");
         String length = getParameter("length");
         String draw = getParameter("draw");
-        
+
         Map session = ActionContext.getContext().getSession();
         User user = OnlineTool.getCurrentUser();
         int userId = user != null ? user.getId() : -1;
-        
+        Map parMap=new HashMap();
         StringBuffer hql = new StringBuffer(
                 "select "
                         + " s.id, "  // 0
@@ -1049,7 +1049,7 @@ public class ContestAction extends BaseAction {
             }
 
             /**
-             * 鏍囬涓嶈兘涓虹┖锛屼笉鑳借秴杩�90瀛楃
+             * 标题不能为空，不能超过90字符
              */
             contest.setTitle(Tools.toHTMLChar(contest.getTitle()));
             if (contest.getTitle() == null || contest.getTitle().trim().isEmpty()) {
@@ -1061,7 +1061,7 @@ public class ContestAction extends BaseAction {
             }
 
             /**
-             * 姣旇禌鎻忚堪涓嶅緱澶氫簬65000瀛楃
+             * 比赛描述不得多于65000字符
              */
             contest.setDescription(Jsoup.clean(contest.getDescription(), Whitelist.relaxed()));
             if (contest.getDescription() != null && contest.getDescription().length() > 65000) {
@@ -1069,7 +1069,7 @@ public class ContestAction extends BaseAction {
             }
 
             /**
-             * 姣旇禌鍏憡涓嶅緱澶氫簬65000瀛楃
+             * 比赛公告不得多于65000字符
              */
             contest.setAnnouncement(Jsoup.clean(contest.getAnnouncement(), Whitelist.relaxed()));
             if (contest.getAnnouncement() != null && contest.getAnnouncement().length() > 65000) {
@@ -1172,7 +1172,7 @@ public class ContestAction extends BaseAction {
                 language = "sh_sql";
             } else {
                 submission.setSource(Tools.toHTMLChar(submission.getSource()));
-                //杩欓噷language鐢ㄤ綔涓簊hjs鎻愪緵璇█璇嗗埆鎵�闇�瑕佺殑class鍚�
+                //这里language用作为shjs提供语言识别所需要的class名
                 language = Tools.findClass4SHJS(submission.getDispLanguage());
             }
         } catch (Exception e) {
