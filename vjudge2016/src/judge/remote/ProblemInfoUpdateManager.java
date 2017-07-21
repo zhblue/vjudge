@@ -14,6 +14,7 @@ import judge.service.BaseService;
 import judge.service.IBaseService;
 import judge.service.JudgeService;
 import judge.tool.Handler;
+import judge.tool.HtmlHandleUtil;
 import judge.tool.SpringBean;
 
 import org.apache.commons.lang3.Validate;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProblemInfoUpdateManager {
+
     private final static Logger log = LoggerFactory.getLogger(ProblemInfoUpdateManager.class);
 
     @Autowired
@@ -92,6 +94,8 @@ public class ProblemInfoUpdateManager {
 class ProblemInfoUpdateTask extends Task<Void> {
     private final static Logger log = LoggerFactory.getLogger(ProblemInfoUpdateTask.class);
 
+    protected static final boolean SAVE_IMG_TO_VJ_SERVER = true;
+
     private Problem problem;
     private IBaseService baseService = SpringBean.getBean(BaseService.class);
 
@@ -121,14 +125,20 @@ class ProblemInfoUpdateTask extends Task<Void> {
                 problem.setUrl(info.url);
 
                 Description description = getSystemDescription();
-                description.setDescription(info.description);
-                description.setInput(info.input);
-                description.setOutput(info.output);
+                if(SAVE_IMG_TO_VJ_SERVER){
+                    description.setDescription(HtmlHandleUtil.transformImgUrlToLocal(info.description));
+                    description.setInput(HtmlHandleUtil.transformImgUrlToLocal(info.input));
+                    description.setOutput(HtmlHandleUtil.transformImgUrlToLocal(info.output));
+                    description.setHint(HtmlHandleUtil.transformImgUrlToLocal(info.hint));
+                } else {
+                    description.setDescription(info.description);
+                    description.setInput(info.input);
+                    description.setOutput(info.output);
+                    description.setHint(info.hint);
+                }
                 description.setSampleInput(info.sampleInput);
                 description.setSampleOutput(info.sampleOutput);
-                description.setHint(info.hint);
                 description.setUpdateTime(new Date());
-
                 baseService.addOrModify(problem);
                 baseService.addOrModify(description);
             }
