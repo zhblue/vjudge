@@ -48,7 +48,6 @@ public abstract class CFStyleQuerier extends AuthenticatedQuerier {
     @Override
     protected SubmissionRemoteStatus query(SubmissionInfo info, RemoteAccount remoteAccount, DedicatedHttpClient client) {
         String html = client.get("/api/user.status?handle=" + info.remoteAccountId + "&from=1&count=20").getBody();
-        
         try {
             Map<String, Object> json = (Map<String, Object>) JSONUtil.deserialize(html);
             List<Map<String, Object>> results = (List<Map<String, Object>>)json.get("result");
@@ -73,8 +72,8 @@ public abstract class CFStyleQuerier extends AuthenticatedQuerier {
                     );
                     html = client.post("/data/judgeProtocol", entity).getBody();
                     status.compilationErrorInfo = "<pre>" + html.replaceAll("(\\\\r)?\\\\n", "\n").replaceAll("\\\\\\\\", "\\\\") + "</pre>";
-                }else if(status.statusType != RemoteStatusType.AC && status.statusType != RemoteStatusType.JUDGING
-                         && status.statusType != RemoteStatusType.QUEUEING){
+                } else if(status.statusType != RemoteStatusType.AC && status.statusType != RemoteStatusType.JUDGING
+                        && status.statusType != RemoteStatusType.QUEUEING){
                     status.rawStatus += " on test " + status.failCase;
                 }
                 return status;

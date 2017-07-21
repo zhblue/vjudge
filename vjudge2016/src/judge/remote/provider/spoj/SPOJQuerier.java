@@ -32,9 +32,9 @@ public class SPOJQuerier extends AuthenticatedQuerier {
                 "/status/ajax=1,ajaxdiff=1", //
                 SimpleNameValueEntityFactory.create("ids", info.remoteRunId, getOjInfo().defaultChaset) //
         ).getBody();
-        html = html.replaceAll("\\\\[nt]", "").replaceAll(">(run|edit)<", "><").replaceAll("<.*?>", "").replace("&nbsp;", "").trim();
+        html = html.replaceAll("\\\\[nt]", "").replaceAll(">(run|edit|ideone it)<", "><").replaceAll("<.*?>", "").replace("&nbsp;", "").trim();
 
-        Pattern pattern = Pattern.compile("\"status_description\":\"(.+?)\", \"id\":" + info.remoteRunId + ", \"status\":.+?,\"time\":\"(.+?)\",\"mem\":\"(.+?)\",");
+        Pattern pattern = Pattern.compile("\"status_description\":\"(.+?)\", \"id\":" + info.remoteRunId + ", \"status\":.+?,\"time\":\"(.+?)\",\"mem\":\"([\\d\\D]+?)\"");
         Matcher matcher = pattern.matcher(html);
         Validate.isTrue(matcher.find());
         

@@ -8,6 +8,7 @@ import judge.httpclient.SimpleHttpResponse;
 import judge.remote.RemoteOjInfo;
 import judge.remote.crawler.RawProblemInfo;
 import judge.remote.crawler.SyncCrawler;
+import judge.remote.shared.FileDownloader;
 import judge.tool.HtmlHandleUtil;
 import judge.tool.Tools;
 import org.apache.commons.lang3.StringUtils;
@@ -75,11 +76,22 @@ public class UVACrawler extends SyncCrawler {
         info.source = getSource(uvaProblemInfo);
         info.url = outerUrl;
 
+        String pdfURL = "http://uva.onlinejudge.org/external/" + Integer.parseInt(problemId1) / 100 + "/" + problemId1 + ".pdf";
+
+        try{
+            String path = this.getClass().getResource("/").getPath().
+                    replace("WEB-INF/classes/", "ojFiles/uva/pdf/" +  Integer.parseInt(problemId1) / 100);
+            FileDownloader.downLoadFromUrl(pdfURL,path);
+            pdfURL =  "../ojFiles/uva/pdf/" +  Integer.parseInt(problemId1) / 100 + "/" + problemId1 + ".pdf";
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
         String descriptionPrefix =
                 "<style type=\"text/css\">h1,h2,h3,h4,h5,h6{margin-bottom:0;}div.textBG p{margin: 0 0 0.0001pt;}</style>" +
-                        "<span style='float:right'><a target='_blank' href='http://uva.onlinejudge.org/external/" + Integer.parseInt(problemId1) / 100 + "/" + problemId1 + ".pdf'><img width='100' height='26' border='0' title='Download as PDF' alt='Download as PDF' src='http://uva.onlinejudge.org/components/com_onlinejudge/images/button_pdf.png'></a></span><div style='clear:both'></div>";
+                        "<span style='float:right'><a target='_blank' href='" + pdfURL + "'><img width='100' height='26' border='0' title='Download as PDF' alt='Download as PDF' src='../images/button_pdf.png'></a></span><div style='clear:both'></div>";
         if (htmlInner.contains("http-equiv=\"Refresh\"")) {
-            info.description = descriptionPrefix;
+            info.description = descriptionPrefix + "<p><embed width=\"100%\" height=\"700\" src=\"" + pdfURL + "\"> </embed></p> ";
         } else {
             info.description = descriptionPrefix + htmlInner;
         }

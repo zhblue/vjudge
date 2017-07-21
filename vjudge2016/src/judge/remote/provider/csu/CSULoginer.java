@@ -20,14 +20,14 @@ public class CSULoginer extends RetentiveLoginer {
 
     @Override
     protected void loginEnforce(RemoteAccount account, DedicatedHttpClient client) {
-        if (client.get("/OnlineJudge/include/profile.php").getBody().contains("Logout")) {
+        if (client.get("/").getBody().contains("Logout")) {
             return;
         }
 
         HttpEntity entity = SimpleNameValueEntityFactory.create( //
                 "user_id", account.getAccountId(), //
                 "password", account.getPassword());
-        client.post("/OnlineJudge/login.php", entity, new HttpBodyValidator("history.go(-2)"));
+        client.post("/csuoj/user/login_ajax", entity, new HttpBodyValidator("Login successful"));
     }
 
 }

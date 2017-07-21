@@ -14,6 +14,7 @@ import judge.remote.submitter.SubmissionInfo;
 import judge.tool.Tools;
 
 import org.apache.commons.lang3.Validate;
+import org.apache.http.client.methods.HttpGet;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,20 +27,23 @@ public class CSUQuerier extends AuthenticatedQuerier {
 
     @Override
     protected SubmissionRemoteStatus query(SubmissionInfo info, RemoteAccount remoteAccount, DedicatedHttpClient client) {
-        String html = client.get("/OnlineJudge/status.php?&top=" + info.remoteRunId).getBody();
-        Pattern pattern = Pattern.compile("<td>\\s*" + info.remoteRunId + "</td><td>.+?<td>.+?<td>(.+?)<td>(.+?)<td>(.+?)<td>");
+        HttpGet get = new HttpGet("/csuoj/Status/status_ajax?solution_id=" + info.remoteRunId);
+        get.setHeader("X-Requested-With", "XMLHttpRequest");
+        String html = client.execute(get).getBody();
+        Pattern pattern = Pattern.compile("\"memory\":(\\d+),\"time\":(\\d+),.*?\"result_show\":\"<.*?>(.+?)<.*?>\"");
         Matcher matcher = pattern.matcher(html);
         Validate.isTrue(matcher.find());
-        
         SubmissionRemoteStatus status = new SubmissionRemoteStatus();
-        status.rawStatus = matcher.group(1).replaceAll("<.*?>", "").trim();
+        status.rawStatus = matcher.group(3).replaceAll("<.*?>", "").trim();
         status.statusType = SubstringNormalizer.DEFAULT.getStatusType(status.rawStatus);
         if (status.statusType == RemoteStatusType.AC) {
-            status.executionMemory = Integer.parseInt(matcher.group(2).replaceAll("\\D", ""));
-            status.executionTime = Integer.parseInt(matcher.group(3).replaceAll("\\D", ""));
+            status.executionMemory = Integer.parseInt(matcher.group(1).replaceAll("\\D", ""));
+            status.executionTime = Integer.parseInt(matcher.group(2).replaceAll("\\D", ""));
         } else if (status.statusType == RemoteStatusType.CE) {
-            html = client.get("/OnlineJudge/ceinfo.php?sid=" + info.remoteRunId).getBody();
-            status.compilationErrorInfo = Tools.regFind(html, "(<pre[\\s\\S]*?</pre>)");
+            get = new HttpGet("/csuoj/status/resdetail_ajax?solution_id=" + info.remoteRunId + "&cid=x");
+            get.setHeader("X-Requested-With", "XMLHttpRequest");
+            html = client.execute(get).getBody();
+            status.compilationErrorInfo = "<pre>" + Tools.regFind(html, "\"msg\":\"(.*?)\",\"data\":").replace("\\n", "\n") + "</pre>";
         }
         
         return status;

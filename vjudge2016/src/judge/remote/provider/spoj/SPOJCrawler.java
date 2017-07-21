@@ -28,13 +28,14 @@ public class SPOJCrawler extends SimpleCrawler {
 
     @Override
     protected void populateProblemInfo(RawProblemInfo info, String problemId, String html) {
-        Validate.isTrue(!html.contains("Wrong problem code!"));
-        Validate.isTrue(html.contains("<h2>SPOJ Problem Set (classical)</h2>") || html.contains("<h2>SPOJ Problem Set (tutorial)</h2>"));
+        Validate.isTrue(!html.contains("In a few seconds you will be redirected to"));
 
-        info.title = Tools.regFind(html, "<h1>\\d+\\.([\\s\\S]*?)</h1>").trim();
+        info.title = Tools.regFind(html, "<h2 id=\"problem-name\" class=\"text-center\">[\\s\\S]*? - ([\\s\\S]*?)</h2>").trim();
         info.timeLimit = (int) (1000 * Double.parseDouble(Tools.regFind(html, "Time limit:</td><td>([\\s\\S]*?)s")));
-        info.description = (Tools.regFind(html, "<p align=\"justify\"></p>([\\s\\S]*?)<hr /><table border=\"0\""));
-        info.source = (Tools.regFind(html, "Resource:</td><td>([\\s\\S]*?)</td></tr>"));
+        info.memoryLimit = (int) (1024 * Double.parseDouble(Tools.regFind(html, ">Memory limit:</td><td>([\\s\\S]*?)MB")));
+        info.description = (Tools.regFind(html, "<div id=\"problem-body\">([\\s\\S]*?)</div><div class=\"text-center\"><a href=\"http://www.spoj.com/submit/"))
+                .replace("<b>Input:</b> ", "<b>Input:</b>\n").replace("<b>Output:</b>", "\n\n<b>Output:</b>").replace("<b>Output:</b> ", "<b>Output:</b>\n");
+        info.source = (Tools.regFind(html, "<tr><td>Resource:</td><td>([\\s\\S]*?)</td></tr>"));
     }
 
 }

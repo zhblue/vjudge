@@ -32,8 +32,8 @@ public class CSULanguageFinder implements LanguageFinder {
         LinkedHashMap<String, String> languageList = new LinkedHashMap<String, String>();
         languageList.put("0", "C");
         languageList.put("1", "C++");
-        languageList.put("2", "Pascal");
         languageList.put("3", "Java");
+        languageList.put("6", "Python");
         return languageList;
     }
 

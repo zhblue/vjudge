@@ -30,7 +30,7 @@ public class SPOJLoginer extends RetentiveLoginer {
                 "autologin", "1", //
                 "submit", "Log In", //
                 "ISO-8859-1");
-        client.post("/logout", entity, HttpStatusValidator.SC_OK);
+        client.post("/login", entity, HttpStatusValidator.SC_MOVED_TEMPORARILY);
     }
 
 }

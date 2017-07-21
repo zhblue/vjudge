@@ -16,6 +16,5 @@ public class CSUInfo {
     static {
         INFO.faviconUrl = "images/remote_oj/CSU_favicon.ico";
         INFO._64IntIoFormat = "%lld & %llu";
-        INFO.urlForIndexDisplay = "http://acm.csu.edu.cn/OnlineJudge/";
     }
 }

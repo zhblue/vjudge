@@ -84,14 +84,14 @@ public class CodeForcesGymCrawler extends CFStyleCrawler {
 			String pdfURI;
 			try{
 			    String path = this.getClass().getResource("/").getPath().
-			            replace("WEB-INF/classes/", "problem/pdf" +  matcher.group(0).substring(0,matcher.group(0).lastIndexOf("/")));
+			            replace("WEB-INF/classes/", "ojFiles/cfgym/pdf" +  matcher.group(0).substring(0,matcher.group(0).lastIndexOf("/")));
 	            FileDownloader.downLoadFromUrl(host.toURI() + matcher.group(0),path);
-	            pdfURI =  "pdf/" + matcher.group(0).substring(1);
+	            pdfURI =  "../ojFiles/cfgym/pdf" + matcher.group(0);
 			} catch (Exception e1) {
 			    pdfURI = host.toURI() + matcher.group(0);
             }
 			info.description = "<strong>Input/Output:<br>" +  io + "</strong>"  + "<br>" +
-			        "<p><a href=\"" + pdfURI + "\">Click here to download PDF file.</a></p><hr>" + 
+			        "<p><a href=\"" + pdfURI + "\">Click here to download the PDF file.</a></p><hr>" +
                     "<p><embed width=\"100%\" height=\"700\" src=\"" + pdfURI + "\"> </embed></p> ";
 			info.input = "";
 			info.output = "";

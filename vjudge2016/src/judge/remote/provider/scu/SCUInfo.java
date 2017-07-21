@@ -10,7 +10,7 @@ public class SCUInfo {
     public static final RemoteOjInfo INFO = new RemoteOjInfo( //
             RemoteOj.SCU, //
             "SCU", //
-            new HttpHost("cstest.scu.edu.cn") //
+            new HttpHost("acm.scu.edu.cn") //
     );
 
     static {

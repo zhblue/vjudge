@@ -18,7 +18,7 @@ public class CSUCrawler extends SimpleCrawler {
 
     @Override
     protected String getProblemUrl(String problemId) {
-        return getHost().toURI() + "/OnlineJudge/problem.php?id=" + problemId;
+        return getHost().toURI() + "/csuoj/problemset/problem?pid=" + problemId;
     }
     
     @Override
@@ -28,16 +28,16 @@ public class CSUCrawler extends SimpleCrawler {
 
     @Override
     protected void populateProblemInfo(RawProblemInfo info, String problemId, String html) {
-        info.title = Tools.regFind(html, "<center><h2>\\d+:([\\s\\S]*?)</h2>").trim();
-        info.timeLimit = (1000 * Integer.parseInt(Tools.regFind(html, "Time Limit: </span>(\\d+) Sec")));
-        info.memoryLimit = (1024 * Integer.parseInt(Tools.regFind(html, "Memory Limit: </span>(\\d+) MB")));
-        info.description = (Tools.regFind(html, "<h2>Description</h2>([\\s\\S]*?)<h2>Input</h2>"));
-        info.input = (Tools.regFind(html, "<h2>Input</h2>([\\s\\S]*?)<h2>Output</h2>"));
-        info.output = (Tools.regFind(html, "<h2>Output</h2>([\\s\\S]*?)<h2>Sample Input</h2>"));
-        info.sampleInput = (Tools.regFind(html, "<h2>Sample Input</h2>([\\s\\S]*?)<h2>Sample Output</h2>").replaceAll("<span", "<pre").replaceAll("</span>", "</pre>"));
-        info.sampleOutput = (Tools.regFind(html, "<h2>Sample Output</h2>([\\s\\S]*?)<h2>HINT</h2>").replaceAll("<span", "<pre").replaceAll("</span>", "</pre>"));
-        info.hint = (Tools.regFind(html, "<h2>HINT</h2>([\\s\\S]*?)<h2>Source</h2>"));
-        info.source = (Tools.regFind(html, "<h2>Source</h2>[\\s\\S]*?<div class=\"content\"><p>([\\s\\S]*?)</p></div><center>"));
+        info.title = Tools.regFind(html, "<h1>\\s*<a.*?>\\s*\\d+:([\\s\\S]*?)\\s*</a></h1>").trim();
+        info.timeLimit = (1000 * Integer.parseInt(Tools.regFind(html, "Time Limit:\\s*<span.*?>(\\d+) Sec")));
+        info.memoryLimit = (1024 * Integer.parseInt(Tools.regFind(html, "Memory Limit:\\s*<span.*?>(\\d+) MB")));
+        info.description = (Tools.regFind(html, "<h2.*?>Description</h2>([\\s\\S]*?)\\s*</div>\\s*<div name=\"Input"));
+        info.input = (Tools.regFind(html, "<h2.*?>Input</h2>([\\s\\S]*?)\\s*</div>\\s*<div name=\"Output"));
+        info.output = (Tools.regFind(html, "<h2.*?>Output</h2>([\\s\\S]*?)\\s*</div>\\s*<div name=\"Sample Input"));
+        info.sampleInput = (Tools.regFind(html, "<h2.*?>Sample Input</h2>([\\s\\S]*?)\\s*</div>\\s*<div name=\"Sample Output").replaceAll("<span", "<pre").replaceAll("</span>", "</pre>"));
+        info.sampleOutput = (Tools.regFind(html, "<h2.*?>Sample Output</h2>([\\s\\S]*?)\\s*</div>\\s*<div name=\"Hint").replaceAll("<span", "<pre").replaceAll("</span>", "</pre>"));
+        info.hint = (Tools.regFind(html, "<h2.*?>Hint</h2>([\\s\\S]*?)\\s*</div>\\s*<div name=\"Source"));
+        info.source = (Tools.regFind(html, "<h2.*?>Source</h2>([\\s\\S]*?)</div>"));
     }
 
 }

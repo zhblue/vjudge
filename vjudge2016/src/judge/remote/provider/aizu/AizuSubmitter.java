@@ -35,7 +35,6 @@ public class AizuSubmitter extends CanonicalSubmitter {
         return matcher.find() ? Integer.parseInt(matcher.group(1)) : -1;
     }
 
-
     @Override
     protected String submitCode(SubmissionInfo info, RemoteAccount remoteAccount, DedicatedHttpClient client) {
         HttpEntity entity = SimpleNameValueEntityFactory.create(

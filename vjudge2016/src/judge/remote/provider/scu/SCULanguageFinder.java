@@ -30,10 +30,10 @@ public class SCULanguageFinder implements LanguageFinder {
     @Override
     public LinkedHashMap<String, String> getDefaultLanguages() {
         LinkedHashMap<String, String> languageList = new LinkedHashMap<String, String>();
-        languageList.put("C++ (G++-3)", "C++ (G++-3)");
-        languageList.put("C (GCC-3)", "C (GCC-3)");
-        languageList.put("JAVA", "JAVA");
-        languageList.put("PASCAL (FPC)", "PASCAL (FPC)");
+        languageList.put("C++", "C++");
+        languageList.put("C", "C");
+        languageList.put("Java", "Java");
+        languageList.put("Pascal", "Pascal");
         return languageList;
     }
 
