@@ -41,6 +41,7 @@ public abstract class CFStyleQuerier extends AuthenticatedQuerier {
         put("SKIPPED","Skipped");
         put("TESTING","Running");
         put("REJECTED","Rejected");
+        put(null,"Queuing");
     }};
     
     @SuppressWarnings("unchecked")
@@ -72,7 +73,8 @@ public abstract class CFStyleQuerier extends AuthenticatedQuerier {
                     );
                     html = client.post("/data/judgeProtocol", entity).getBody();
                     status.compilationErrorInfo = "<pre>" + html.replaceAll("(\\\\r)?\\\\n", "\n").replaceAll("\\\\\\\\", "\\\\") + "</pre>";
-                } else if(status.statusType != RemoteStatusType.AC && status.statusType != RemoteStatusType.JUDGING){
+                }else if(status.statusType != RemoteStatusType.AC && status.statusType != RemoteStatusType.JUDGING
+                         && status.statusType != RemoteStatusType.QUEUEING){
                     status.rawStatus += " on test " + status.failCase;
                 }
                 return status;
