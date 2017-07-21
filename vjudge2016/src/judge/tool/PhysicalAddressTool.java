@@ -29,6 +29,14 @@ public class PhysicalAddressTool {
         if (addressMap.containsKey(ip)) {
             return addressMap.get(ip);
         }
+        if("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)){
+            addressMap.put(ip, "localhost");
+            return "localhost";
+        }
+        if(isPrivateIP(ip)) {
+            addressMap.put(ip, "LAN");
+            return "LAN";
+        }
         addressMap.put(ip, "N/A");
         new Task<String>(ExecutorTaskType.GENERAL) {
             @Override
@@ -36,7 +44,7 @@ public class PhysicalAddressTool {
                 HttpHost host = new HttpHost("www.ip138.com");
                 DedicatedHttpClient client = SpringBean.getBean(DedicatedHttpClientFactory.class).build(host, "gb2312");
                 String html = client.get("/ips138.asp?ip=" + ip).getBody();
-                String physicalAddress = Tools.regFind(html, "<li>本站主数据：(.+?)</li>");
+                String physicalAddress = Tools.regFind(html, "<li>本站数据：(.+?)</li>");
                 if (!StringUtils.isBlank(physicalAddress)) {
                     addressMap.put(ip, physicalAddress);
                 }
@@ -49,6 +57,20 @@ public class PhysicalAddressTool {
         return addressMap.get(ip);
     }
     
+    private static boolean isPrivateIP(String ip) {
+        if(ip.contains(":")) {                                                  // IPv6
+            ip = ip.toUpperCase();
+            return ip.startsWith("FE") && 'C' <= ip.charAt(2);                  // FEC0::/10
+        }
+        if(ip.startsWith("10.")) {                                              // A类
+            return true;
+        }
+        String[] s = ip.split("\\.");
+        int num = (Integer.parseInt(s[0]) << 8) + Integer.parseInt(s[1]);
+        return (172 << 8) + 16 <= num && num <= (172 << 8)  + 31                // B类
+                || (192 << 8) + 168 == num;                                     // C类
+    }
+
     static public int getIpMapSize() {
         return addressMap.size();
     }
