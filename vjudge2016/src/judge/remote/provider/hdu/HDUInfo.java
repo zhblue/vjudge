@@ -10,7 +10,7 @@ public class HDUInfo {
     public static final RemoteOjInfo INFO = new RemoteOjInfo( //
             RemoteOj.HDU, //
             "HDU", //
-            new HttpHost("acm.hdu.edu.cn") //
+            new HttpHost("acm.split.hdu.edu.cn") //
     );
     
     static {
