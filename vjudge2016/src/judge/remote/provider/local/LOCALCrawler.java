@@ -56,8 +56,14 @@ public class LOCALCrawler extends SyncCrawler {
             info.title = matcher.group(2);
             info.source = matcher.group(1);
         }
+        info.timeLimit=1000;
+        info.memoryLimit=256000;
+        try{
         info.timeLimit = (1000 * Integer.parseInt(Tools.regFind(html, ": </span>(\\d+) Sec")));
         info.memoryLimit = (1024 * Integer.parseInt(Tools.regFind(html, ": </span>(\\d+) MB")));
+        }catch(Exception e){
+        	
+        }
         info.description = (Tools.regFind(html, "<h2>Description</h2>([\\s\\S]*?)<h2>Input</h2>"));
         info.input = (Tools.regFind(html, "<h2>Input</h2>([\\s\\S]*?)<h2>Output</h2>"));
         info.output = (Tools.regFind(html, "<h2>Output</h2>([\\s\\S]*?)<h2>Sample Input</h2>"));
