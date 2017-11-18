@@ -39,7 +39,7 @@ public class LOCALCrawler extends SyncCrawler {
                 //client.get(LOCALInfo.PATH+"/setlang.php?lang=en").getBody();
                 problemUrl = getProblemUrl(host, problemId);
                 html = client.get(problemUrl, HttpStatusValidator.SC_OK).getBody();
-                System.out.println("hhh=>"+html);
+               // System.out.println("hhh=>"+html);
                 html = HtmlHandleUtil.transformUrlToAbs(html, problemUrl);
                 break;
             } catch (Throwable t) {
@@ -71,9 +71,13 @@ public class LOCALCrawler extends SyncCrawler {
         info.sampleOutput = (Tools.regFind(html, "<h2>Sample Output</h2>([\\s\\S]*?)<h2>HINT</h2>").replaceAll("<span", "<pre").replaceAll("</span>", "</pre>").replace("<br /> ", "<br />"));
         info.hint = (Tools.regFind(html, "<h2>HINT</h2>([\\s\\S]*?)<h2>Source</h2>"));
         info.url = problemUrl;
-        if("".equals(info.description)){
-        	int start=html.indexOf("题目描述");
-        	int end=html.indexOf("来源");
+        if("".equals(info.description)&&html.contains("MarkForVirtualJudge")){
+        	int start=html.indexOf("<!--StartMarkForVirtualJudge-->")+"<!--StartMarkForVirtualJudge-->".length();
+        	int end=html.indexOf("<!--EndMarkForVirtualJudge-->")-1;
+        	info.description=html.substring(start,end);
+        }else{
+        	int start=html.indexOf("题目描述")+"题目描述".length();
+        	int end=html.lastIndexOf("来源")-1;
         	info.description=html.substring(start,end);
         }
         Validate.isTrue(!StringUtils.isBlank(info.title));
