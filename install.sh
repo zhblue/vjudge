@@ -1,4 +1,5 @@
 #!/bin/bash
+apt-get update
 apt-get install tomcat7 mysql-server
 wget https://github.com/zhblue/vjudge/raw/master/vjudge.war
 cp vjudge.war /var/lib/tomcat7/webapps/
