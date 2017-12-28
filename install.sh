@@ -1,6 +1,6 @@
 #!/bin/bash
 apt-get update
-apt-get install tomcat7 mysql-server
+apt-get -y install tomcat7 mysql-server
 wget https://github.com/zhblue/vjudge/raw/master/vjudge.war
 cp vjudge.war /var/lib/tomcat7/webapps/
 echo "waiting for tomcat7 deploying vjudge.war ... 5s count down"
