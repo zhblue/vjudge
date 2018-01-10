@@ -1,6 +1,6 @@
 {
-    socket_timeout : 20000,
-    connection_timeout : 10000,
+    socket_timeout : 3000,
+    connection_timeout : 3000,
     max_conn_total : 20,
     max_conn_per_route : 4,
     user_agent : "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36",
