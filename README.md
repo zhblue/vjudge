@@ -15,7 +15,7 @@ https://github.com/hnshhslsh/virtual-judge
 ubuntu 14/16 LTS install script
 ```
 wget https://github.com/zhblue/vjudge/raw/master/install.sh
-sudo bash https://github.com/zhblue/vjudge/raw/master/install.sh
+sudo bash install.sh
 ```
 
 基本操作：
