@@ -12,11 +12,12 @@ https://github.com/hnshhslsh/virtual-judge
 整理了所有的jar依赖，修订了路径和配置，增加了与最新版hustoj配合的本地判题功能。
 工程整理为eclipse工程，不需要破解myeclipse
 
-ubuntu 14/16 LTS install script
+Ubuntu 14/16 LTS install script 执行完访问http://服务器IP:8080/vjudge/ 即可使用vjudge
 ```
 wget https://github.com/zhblue/vjudge/raw/master/install.sh
 sudo bash install.sh
 ```
+
 
 基本操作：
 * 安装 jdk7+
