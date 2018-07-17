@@ -10,6 +10,8 @@ public class SubstringNormalizer implements RemoteStatusNormalizer {
     
     @SuppressWarnings("serial")
     private static LinkedHashMap<String, RemoteStatusType> baseStatusTypeMap = new LinkedHashMap<String, RemoteStatusType>(){{
+        put("Submitted", RemoteStatusType.SUBMITTED);
+
         put("Wait", RemoteStatusType.QUEUEING);
         put("Pend", RemoteStatusType.QUEUEING);
         put("Queuing", RemoteStatusType.QUEUEING);

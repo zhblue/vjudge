@@ -19,7 +19,7 @@ public class LightOJLanguageFinder implements LanguageFinder {
 
     @Override
     public boolean isDiverse() {
-        return true;
+        return false;
     }
 
     @Override

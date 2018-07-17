@@ -18,7 +18,7 @@ public class SPOJLanguageFinder implements LanguageFinder {
 
     @Override
     public boolean isDiverse() {
-        return true;
+        return false;
     }
 
     @Override

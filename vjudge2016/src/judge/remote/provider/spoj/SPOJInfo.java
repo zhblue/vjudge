@@ -10,7 +10,7 @@ public class SPOJInfo {
     public static final RemoteOjInfo INFO = new RemoteOjInfo( //
             RemoteOj.SPOJ, //
             "SPOJ", //
-            new HttpHost("www.spoj.com") //
+            HttpHost.create("https://www.spoj.com")//
     );
 
     static {

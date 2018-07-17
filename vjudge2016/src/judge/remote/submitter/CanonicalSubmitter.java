@@ -130,7 +130,6 @@ public abstract class CanonicalSubmitter implements Submitter {
             if (errorStatus != null) {
                 return new SubmissionReceipt(null, null, errorStatus);
             }
-            Thread.sleep(2000);
 
             Integer runIdAfter;
             long beginTime = System.currentTimeMillis();

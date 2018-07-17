@@ -64,7 +64,7 @@ public class CodeForcesGymCrawler extends CFStyleCrawler {
 			String htmlDescription = taskDescription.get();
 
 			String regex = "<a href=\"\\/gym\\/" + contestNum + "\\/problem\\/" + problemNum
-					+ "\"><!--\\s*-->([^<]+)(?:(?:.|\\s)*?<div){2}[^>]*>\\s*([^<]+)<\\/div>\\s*(\\d+)\\D*(\\d+)";
+					+ "\"><!--\\s*-->([^<]+)(?:(?:.|\\s)*?<div){2}[^>]*>\\s*([^<]+)<\\/div>\\s*([\\d.]+)\\D*(\\d+)";
 
 			Matcher matcher = Pattern.compile(regex).matcher(htmlDescription);
 			matcher.find();

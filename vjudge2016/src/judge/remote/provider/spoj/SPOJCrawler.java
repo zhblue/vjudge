@@ -18,7 +18,7 @@ public class SPOJCrawler extends SimpleCrawler {
 
     @Override
     protected String getProblemUrl(String problemId) {
-        return getHost().toURI() + "/problems/" + problemId;
+        return getHost().toURI() + "/problems/" + problemId + "/";
     }
     
     @Override

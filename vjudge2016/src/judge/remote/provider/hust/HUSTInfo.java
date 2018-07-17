@@ -10,7 +10,7 @@ public class HUSTInfo {
     public static final RemoteOjInfo INFO = new RemoteOjInfo( //
             RemoteOj.HUST, //
             "HUST", //
-            new HttpHost("hustoj.org") //
+            new HttpHost("acm.hust.edu.cn") //
     );
     
     static {
