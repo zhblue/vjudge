@@ -209,7 +209,7 @@ public class ProblemAction extends BaseAction{
             return ERROR;
         }
 
-        languageList = languageManager.getLanguages(problem.getOriginOJ());
+        languageList = languageManager.getLanguages(problem.getOriginOJ(),problem.getOriginProb());
         //        languageList = (Map<Object, String>) sc.getAttribute(problem.getOriginOJ());
         isOpen = user.getShare();
         return SUCCESS;
@@ -225,7 +225,7 @@ public class ProblemAction extends BaseAction{
         problem = (Problem) baseService.query(Problem.class, id);
         //        ServletContext sc = ServletActionContext.getServletContext();
         //        languageList = (Map<Object, String>) sc.getAttribute(problem.getOriginOJ());
-        languageList = languageManager.getLanguages(problem.getOriginOJ());
+        languageList = languageManager.getLanguages(problem.getOriginOJ(),problem.getOriginProb());
 
         if (problem == null){
             this.addActionError("Please submit via normal approach!");
@@ -258,7 +258,7 @@ public class ProblemAction extends BaseAction{
         submission.setLanguage(language);
         submission.setSource(source);
         submission.setIsOpen(isOpen);
-        submission.setDispLanguage(languageManager.getLanguages(problem.getOriginOJ()).get(language));
+        submission.setDispLanguage(languageManager.getLanguages(problem.getOriginOJ(),problem.getOriginProb()).get(language));
         submission.setUsername(user.getUsername());
         submission.setOriginOJ(problem.getOriginOJ());
         submission.setOriginProb(problem.getOriginProb());
@@ -524,7 +524,7 @@ public class ProblemAction extends BaseAction{
         }
         problem = submission.getProblem();
         submission.setSource(Tools.toHTMLChar(submission.getSource()));
-        languageList = languageManager.getLanguages(problem.getOriginOJ());
+        languageList = languageManager.getLanguages(problem.getOriginOJ(),problem.getOriginProb());
         //        languageList = (Map<Object, String>) ApplicationContainer.serveletContext.getAttribute(problem.getOriginOJ());
         submission.setLanguage(languageList.get(submission.getLanguage()));
         uid = submission.getUser().getId();

@@ -644,7 +644,7 @@ public class ContestAction extends BaseAction {
                 json.put("timeLimit", problem.getTimeLimit());
                 json.put("memoryLimit", problem.getMemoryLimit());
                 json.put("_64IOFormat", lf.get(problem.getOriginOJ()));
-                json.put("languageList", languageManager.getLanguages(problem.getOriginOJ()));
+                json.put("languageList", languageManager.getLanguages(problem.getOriginOJ(),problem.getOriginProb()));
                 json.put("oj", problem.getOriginOJ());
 
                 problemInfoUpdateManager.updateProblem(problem, false);
@@ -762,7 +762,7 @@ public class ContestAction extends BaseAction {
             }
         }
 
-        languageList = languageManager.getLanguages(problem.getOriginOJ());
+        languageList = languageManager.getLanguages(problem.getOriginOJ(),problem.getOriginProb());
         //        languageList = (Map<Object, String>) ApplicationContainer.serveletContext.getAttribute(problem.getOriginOJ());
         if (!languageList.containsKey(language)){
             json = "No such language";
