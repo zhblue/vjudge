@@ -20,10 +20,10 @@ sudo bash install.sh
 
 
 基本操作：
-* 安装 jdk7+
+* 安装 jdk8+
 * 安装 mysql5+
-* 安装启动tomcat7+
-* 将下载到的vjudge.war文件放入webapps目录
+* 安装启动tomcat8+
+* 将下载到的vjudge.war文件放入/var/lib/tomcat8/webapps目录
 * 等待tomcat自动解压缩得到vjudge目录
 * 启动mysql,建库，用vjudge/WEB-INF/classes/vhoj_20141109.sql 建表。
 * 编辑vjudge/WEB-INF/classes/config.properties设置数据库账号
